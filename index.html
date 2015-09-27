@@ -3,18 +3,39 @@
     <head>
         <meta charset="utf-8">
         <title>Good Weather</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="/css/stylesheet.css" media="screen" title="no title" charset="utf-8">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     </head>
     <body>
         <div data-role='page'>
-            <div data-role='header'>
-
+            <div data-role="panel" id='left-panel' data-theme='b'>
+                <ul data-role='listview'>
+                    <li data-icon='delete'><a href='#' data-rel='close'>Close</a></li>
+                    <li data-role='list-divider'>Select a City</li>
+                    <li><a href='#' class='city' data-rel='close'>Current Location</a></li>
+                    <li><a href='#' class='city' data-rel='close'>Portland, OR</a></li>
+                    <li><a href='#' class='city' data-rel='close'>Chapel Hill, NC</a></li>
+                    <li><a href='#' class='city' data-rel='close'>New York, New York</a></li>
+                    <li><a href='#' class='city' data-rel='close'>Chicago, IL</a></li>
+                </ul>
+            </div> <!--end panel -->
+            <div data-role='header' data-position='fixed' data-theme="b">
+                <h1>Good Weather</h1>
+                <a href='#left-panel' data-icon='bars' data-role='button' data-iconpos='notext' data-iconshadow='false'>Menu</a>
             </div>
-            <div data-role='content'>
-
+            <div data-role='content' class='content'>
+                <h1 id='current_temp' class='icon' data-icon='B'>65 &#176;F</h1>
+                <p id='summary'>
+                    partly cloudy
+                </p>
+                <p id='location'>
+                    Current Location
+                </p>
             </div>
-            <div data-role='footer'>
 
-            </div>
         </div>
     </body>
 </html>

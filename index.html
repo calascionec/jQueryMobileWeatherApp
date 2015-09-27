@@ -22,14 +22,14 @@
                         "partly-cloudy-night": "4"};
 
             var cities = {
-                        "portland, or" : {coords : {lat:45.523062, lng:-122.676482}},
-                        "chapel hill, nc" : {coords : {lat:35.913200, lng:-79.055845}},
-                        "new york, ny" : {coords : {lat:40.712784, lng:-74.005941}},
-                        "chicago, il" : {coords : {lat:41.878114, lng:-87.629798}},
+                        "portland, or" : {coords : {latitude:45.523062, longitude:-122.676482}},
+                        "chapel hill, nc" : {coords : {latitude:35.913200, longitude:-79.055845}},
+                        "new york, ny" : {coords : {latitude:40.712784, longitude:-74.005941}},
+                        "chicago, il" : {coords : {latitude:41.878114, longitude:-87.629798}},
                         "current location": ''
             }
-            function loadweather(cityCoords){
-                var latlng = cityCoords.coords.lat + "," + cityCoords.coords.lng;
+            function loadWeather(cityCoords){
+                var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
                 var forecastUrl = "https://api.forecast.io/forecast/8b1671d2992a156e3e87f664e97e338e/" +latlng;
 
                 $.ajax({
@@ -51,8 +51,19 @@
 
             function loadCity(city) {
                 $("#location").html(city);
+                if (city.toLowerCase() === "current location"){
+                    if( navigator.geolocation){
+                        navigator.geolocation.getCurrentPosition(loadWeather, loadDefaultCity);
+                    } else {
+                        loadDefaultCity();
+                    }
+                } else {
+                    loadWeather(cities[city.toLowerCase()]);
+                }
+            }
 
-                loadweather(cities[city.toLowerCase()])
+            function loadDefaultCity() {
+                loadCity("New York, New York")
             }
 
             $(document).ready(function(){

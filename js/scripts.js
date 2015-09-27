@@ -26,7 +26,7 @@ function loadWeather(cityCoords){
         contentType: 'application/json',
         dataType: 'jsonp',
         success: function(json) {
-            console.log(json);
+            // console.log(json);
             $("#current_temp").html(Math.round(json.currently.temperature) + "&#176;F");
             $("#summary").html(json.currently.summary);
             $("#current_temp").attr("data-icon", icons[json.currently.icon]);

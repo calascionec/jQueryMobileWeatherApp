@@ -10,9 +10,27 @@
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
         <script type="text/javascript">
+            var icons = {"clear-day": "A",
+                        "clear-night": "C",
+                        "rain": "R",
+                        "snow": "W",
+                        "sleet": "X",
+                        "wind": "S",
+                        "fog": "M",
+                        "cloudy": "N",
+                        "partly-cloudy-day": "H",
+                        "partly-cloudy-night": "4"};
 
-            function loadweather(){
-                var forecastUrl = "https://api.forecast.io/forecast/8b1671d2992a156e3e87f664e97e338e/37.8267,-122.423";
+            var cities = {
+                        "portland, or" : {coords : {lat:45.523062, lng:-122.676482}},
+                        "chapel hill, nc" : {coords : {lat:35.913200, lng:-79.055845}},
+                        "new york, ny" : {coords : {lat:40.712784, lng:-74.005941}},
+                        "chicago, il" : {coords : {lat:41.878114, lng:-87.629798}},
+                        "current location": ''
+            }
+            function loadweather(cityCoords){
+                var latlng = cityCoords.coords.lat + "," + cityCoords.coords.lng;
+                var forecastUrl = "https://api.forecast.io/forecast/8b1671d2992a156e3e87f664e97e338e/" +latlng;
 
                 $.ajax({
                     url: forecastUrl,
@@ -23,14 +41,25 @@
                         console.log(json);
                         $("#current_temp").html(Math.round(json.currently.temperature) + "&#176;F");
                         $("#summary").html(json.currently.summary);
+                        $("#current_temp").attr("data-icon", icons[json.currently.icon]);
                     },
                     error: function(e) {
                         console.log(e.message);
                     }
                 });
             }
+
+            function loadCity(city) {
+                $("#location").html(city);
+
+                loadweather(cities[city.toLowerCase()])
+            }
+
             $(document).ready(function(){
-                loadweather();
+                loadCity("Chicago, IL");
+                $("a.city").bind("click", function() {
+                    loadCity($(this).html());
+                });
             });
         </script>
     </head>
@@ -43,7 +72,7 @@
                     <li><a href='#' class='city' data-rel='close'>Current Location</a></li>
                     <li><a href='#' class='city' data-rel='close'>Portland, OR</a></li>
                     <li><a href='#' class='city' data-rel='close'>Chapel Hill, NC</a></li>
-                    <li><a href='#' class='city' data-rel='close'>New York, New York</a></li>
+                    <li><a href='#' class='city' data-rel='close'>New York, NY</a></li>
                     <li><a href='#' class='city' data-rel='close'>Chicago, IL</a></li>
                 </ul>
             </div> <!--end panel -->
